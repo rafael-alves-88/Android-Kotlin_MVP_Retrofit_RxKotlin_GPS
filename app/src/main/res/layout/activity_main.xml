@@ -8,6 +8,21 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.7"
+            android:scaleType="centerCrop" />
+
+        <include layout="@layout/black_transparent" />
+
+    </FrameLayout>
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

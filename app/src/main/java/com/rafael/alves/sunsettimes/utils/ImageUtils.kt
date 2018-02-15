@@ -11,5 +11,9 @@ class ImageUtils {
         fun loadCountryFlag(context: Context, countryCode: String?, imageView: ImageView) {
             Picasso.with(context).load(String.format(BuildConfig.COUNTRY_FLAG_BASE_URL, countryCode)).into(imageView)
         }
+
+        fun loadImageFromRes(context: Context, resId: Int, imageView: ImageView) {
+            Picasso.with(context).load(resId).into(imageView)
+        }
     }
 }

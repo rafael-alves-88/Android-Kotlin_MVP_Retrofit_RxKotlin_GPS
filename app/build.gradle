@@ -99,6 +99,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:11.8.0'
     implementation "com.android.support.constraint:constraint-layout:1.0.2"
     implementation "com.jakewharton.timber:timber:4.6.1"
+    implementation "com.yayandroid:ParallaxRecyclerView:1.1"
     implementation "com.squareup.picasso:picasso:2.5.2"
     implementation "com.google.code.gson:gson:2.8.2"
     implementation "io.reactivex.rxjava2:rxjava:2.1.6"

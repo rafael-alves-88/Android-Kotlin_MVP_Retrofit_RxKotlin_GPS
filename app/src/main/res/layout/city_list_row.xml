@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:padding="10dp">
+
+    <com.yayandroid.parallaxrecyclerview.ParallaxImageView
+        android:id="@+id/ivCountryFlag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:parallax_ratio="1.2"
+        tools:src="@mipmap/ic_launcher_round" />
+
+    <include layout="@layout/black_transparent" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/RecyclerViewText"
+            android:text="Sunrise: "
+            android:layout_column="0"
+            android:layout_row="0"/>
+
+        <TextView
+            android:id="@+id/tvSunrise"
+            style="@style/RecyclerViewText"
+            android:layout_column="1"
+            android:layout_row="0" />
+
+        <TextView
+            style="@style/RecyclerViewText"
+            android:text="Sunset: "
+            android:layout_column="0"
+            android:layout_row="1"/>
+
+        <TextView
+            android:id="@+id/tvSunset"
+            style="@style/RecyclerViewText"
+            android:layout_column="1"
+            android:layout_row="1"/>
+
+        <TextView
+            style="@style/RecyclerViewText"
+            android:text="Latitude: "
+            android:layout_column="0"
+            android:layout_row="2"/>
+
+        <TextView
+            android:id="@+id/tvLatitude"
+            style="@style/RecyclerViewText"
+            android:layout_column="1"
+            android:layout_row="2"/>
+
+        <TextView
+            style="@style/RecyclerViewText"
+            android:text="Longitude: "
+            android:layout_column="0"
+            android:layout_row="3"/>
+
+        <TextView
+            android:id="@+id/tvLongitude"
+            style="@style/RecyclerViewText"
+            android:layout_column="1"
+            android:layout_row="3"/>
+
+        <TextView
+            style="@style/RecyclerViewText"
+            android:text="Last Update: "
+            android:layout_column="0"
+            android:layout_row="4"/>
+
+        <TextView
+            android:id="@+id/tvLastUpdate"
+            style="@style/RecyclerViewText"
+            android:layout_column="1"
+            android:layout_row="4"/>
+
+        <TextView
+            style="@style/RecyclerViewText"
+            android:text="Location: "
+            android:layout_column="0"
+            android:layout_row="5"/>
+
+        <TextView
+            android:id="@+id/tvLocation"
+            style="@style/RecyclerViewText"
+            android:layout_column="1"
+            android:layout_row="5"/>
+
+    </GridLayout>
+
+</FrameLayout>
