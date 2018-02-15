@@ -1,0 +1,111 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+project.ext.set("compileSdkVersion", 26)
+project.ext.set("applicationId", "com.rafael.alves.sunsettimes")
+project.ext.set("minSdkVersion", 21)
+project.ext.set("targetSdkVersion", 26)
+project.ext.set("versionName", "1.0.0")
+project.ext.set("supportLibVersion", "27.0.2")
+project.ext.set("flavorDimensionFree", "free")
+
+android {
+    compileSdkVersion project.compileSdkVersion
+    defaultConfig {
+        applicationId project.applicationId
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName project.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../keystore')
+            storePassword "sunset2018"
+            keyAlias "sunset2018"
+            keyPassword "sunset2018"
+        }
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFile 'filesproguard/proguard-crashlytics.pro'
+            proguardFile 'filesproguard/proguard-google-play-services.pro'
+            proguardFile 'filesproguard/proguard-gson.pro'
+            proguardFile 'filesproguard/proguard-joda-time.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            proguardFile 'filesproguard/proguard-crashlytics.pro'
+            proguardFile 'filesproguard/proguard-google-play-services.pro'
+            proguardFile 'filesproguard/proguard-gson.pro'
+            proguardFile 'filesproguard/proguard-joda-time.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+        }
+    }
+
+    flavorDimensions project.flavorDimensionFree
+
+    productFlavors {
+
+        def LOG_LEVEL_NONE = "0"
+        def LOG_LEVEL_ERROR = "1"
+        def LOG_LEVEL_WARN = "2"
+        def LOG_LEVEL_INFO = "3"
+        def LOG_LEVEL_DEBUG = "4"
+        def LOG_LEVEL_VERBOSE = "5"
+        def LOG_LEVEL_ASSERT = "6"
+
+        prod {
+            applicationId project.applicationId
+            dimension project.flavorDimensionFree
+            buildConfigField "String", "API_BASE_URL", '"https://api.sunrise-sunset.org/"'
+            buildConfigField "long", "RETROFIT_TIMEOUT", "15"
+            buildConfigField "int", "LOG_LEVEL", LOG_LEVEL_NONE
+        }
+
+        dev {
+            applicationId project.applicationId + ".dev"
+            dimension project.flavorDimensionFree
+            buildConfigField "String", "API_BASE_URL", '"https://api.sunrise-sunset.org/"'
+            buildConfigField "long", "RETROFIT_TIMEOUT", "15"
+            buildConfigField "int", "LOG_LEVEL", LOG_LEVEL_DEBUG
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$project.supportLibVersion"
+    implementation "com.android.support:support-v4:$project.supportLibVersion"
+    implementation "com.android.support:design:$project.supportLibVersion"
+    implementation 'com.google.android.gms:play-services-location:11.8.0'
+    implementation "com.android.support.constraint:constraint-layout:1.0.2"
+    implementation "com.jakewharton.timber:timber:4.6.1"
+    implementation "com.google.code.gson:gson:2.8.2"
+    implementation "io.reactivex.rxjava2:rxjava:2.1.6"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
+    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.6.0"
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "com.android.support.test:runner:1.0.1"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.1"
+}
