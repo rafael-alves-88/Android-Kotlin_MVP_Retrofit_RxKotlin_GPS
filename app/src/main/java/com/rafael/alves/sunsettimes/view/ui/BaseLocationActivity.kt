@@ -49,6 +49,8 @@ abstract class BaseLocationActivity : BaseActivity(),
         super.onResume()
         if (mGoogleApiClient.isConnected) {
             startLocationUpdates()
+        } else {
+            startFusedLocation()
         }
     }
     //endregion
