@@ -1,12 +1,9 @@
 package com.rafael.alves.sunsettimes.view.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Location
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -56,32 +53,6 @@ abstract class BaseLocationActivity : BaseActivity(),
     }
     //endregion
 
-    //region [ Permissions ]
-    fun checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            startFusedLocation()
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    0)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        when (requestCode) {
-            0 -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startFusedLocation()
-            } else {
-                // TODO - msg
-                Toast.makeText(this@BaseLocationActivity, "No permission to access location!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-    //endregion
-
     //region [ Location ]
     private fun createLocationRequest() {
         mLocationRequest = LocationRequest()
@@ -90,7 +61,7 @@ abstract class BaseLocationActivity : BaseActivity(),
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
-    private fun startFusedLocation() {
+    fun startFusedLocation() {
         if (PlayServicesUtils.isGooglePlayServicesAvailable(this)) {
             createLocationRequest()
             mGoogleApiClient = GoogleApiClient.Builder(this)
@@ -113,9 +84,9 @@ abstract class BaseLocationActivity : BaseActivity(),
         startLocationUpdates()
     }
 
+    @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (hasGPSPermission()) {
             LocationServices.FusedLocationApi.requestLocationUpdates(
                     mGoogleApiClient, mLocationRequest, this)
         }
@@ -136,7 +107,7 @@ abstract class BaseLocationActivity : BaseActivity(),
     }
 
     fun getAddress(location: Location?) : AddressCode? {
-        var addressCode = AddressCode()
+        val addressCode = AddressCode()
 
         if (Geocoder.isPresent()) {
             try {

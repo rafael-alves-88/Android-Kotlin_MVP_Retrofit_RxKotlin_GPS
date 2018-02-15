@@ -28,7 +28,7 @@ class CityListActivity : BaseLocationActivity(), NavigationView.OnNavigationItem
         setSupportActionBar(toolbar)
         setButtons()
         setNavigationDrawer()
-        super.checkPermissions()
+        startFusedLocation()
     }
     //endregion
 
