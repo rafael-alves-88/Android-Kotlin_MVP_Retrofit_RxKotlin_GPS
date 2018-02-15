@@ -12,6 +12,7 @@ import com.rafael.alves.sunsettimes.R
 import com.rafael.alves.sunsettimes.model.SunsetTimes
 import com.rafael.alves.sunsettimes.presenter.CityListPresenter
 import com.rafael.alves.sunsettimes.presenter.contract.SunsetTimesListener
+import com.rafael.alves.sunsettimes.utils.ImageUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -36,13 +37,7 @@ class CityListActivity : BaseLocationActivity(), NavigationView.OnNavigationItem
         if (location != null) {
             mCityListPresenter.getCurrentLocationSunsetTimes(location, object : SunsetTimesListener {
                 override fun onSuccess(sunsetTimes: SunsetTimes?) {
-                    tvSunrise.text = sunsetTimes?.results?.sunrise
-                    tvSunset.text = sunsetTimes?.results?.sunset
-                    tvLatitude.text = location.latitude.toString()
-                    tvLongitude.text = location.longitude.toString()
-                    tvLastUpdate.text = updateTime
-                    tvLocation.text = getAddress(location)
-                    getLocationByCityName("São Paulo")
+                    updateUI(sunsetTimes, location, updateTime)
                 }
 
                 override fun onFail() {
@@ -66,6 +61,18 @@ class CityListActivity : BaseLocationActivity(), NavigationView.OnNavigationItem
         }
     }
     //endregion
+
+    private fun updateUI(sunsetTimes: SunsetTimes?, location: Location, updateTime: String) {
+        tvSunrise.text = sunsetTimes?.results?.sunrise
+        tvSunset.text = sunsetTimes?.results?.sunset
+        tvLatitude.text = location.latitude.toString()
+        tvLongitude.text = location.longitude.toString()
+        tvLastUpdate.text = updateTime
+        val address = getAddress(location)
+        tvLocation.text = address?.address
+        ImageUtils.loadCountryFlag(this@CityListActivity, address?.countryCode, ivCountryFlag)
+        getLocationByCityName("São Paulo")
+    }
 
     private fun setButtons() {
         fab.setOnClickListener { view ->

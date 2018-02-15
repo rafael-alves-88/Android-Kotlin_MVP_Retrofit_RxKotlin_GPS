@@ -73,4 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:id="@+id/ivCountryFlag"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -18,6 +18,8 @@ import java.text.DateFormat
 import java.util.*
 import android.location.Geocoder
 import java.io.IOException
+import com.rafael.alves.sunsettimes.model.AddressCode
+
 
 abstract class BaseLocationActivity : BaseActivity(),
         LocationListener,
@@ -133,8 +135,8 @@ abstract class BaseLocationActivity : BaseActivity(),
                 mGoogleApiClient, this)
     }
 
-    fun getAddress(location: Location?) : String? {
-        var address: String? = null
+    fun getAddress(location: Location?) : AddressCode? {
+        var addressCode = AddressCode()
 
         if (Geocoder.isPresent()) {
             try {
@@ -146,15 +148,17 @@ abstract class BaseLocationActivity : BaseActivity(),
                     val city = addresses[0].locality
                     val state = addresses[0].adminArea
                     val country = addresses[0].countryName
+                    val countryCode = addresses[0].countryCode.toLowerCase()
 
-                    address = String.format("%s, %s - %s", city, state, country)
+                    addressCode.address = String.format("%s, %s - %s", city, state, country)
+                    addressCode.countryCode = countryCode
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
 
-        return address
+        return addressCode
     }
 
     fun getLocationByCityName(city: String): List<Address>? {
