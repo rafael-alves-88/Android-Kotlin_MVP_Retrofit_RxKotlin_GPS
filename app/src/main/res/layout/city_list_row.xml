@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/distance_to_view_normal">
 
     <com.yayandroid.parallaxrecyclerview.ParallaxImageView
         android:id="@+id/ivCountryFlag"
@@ -16,84 +16,75 @@
 
     <include layout="@layout/black_transparent" />
 
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="2"
         android:padding="10dp">
-
-        <TextView
-            style="@style/RecyclerViewText"
-            android:text="Sunrise: "
-            android:layout_column="0"
-            android:layout_row="0"/>
-
-        <TextView
-            android:id="@+id/tvSunrise"
-            style="@style/RecyclerViewText"
-            android:layout_column="1"
-            android:layout_row="0" />
-
-        <TextView
-            style="@style/RecyclerViewText"
-            android:text="Sunset: "
-            android:layout_column="0"
-            android:layout_row="1"/>
-
-        <TextView
-            android:id="@+id/tvSunset"
-            style="@style/RecyclerViewText"
-            android:layout_column="1"
-            android:layout_row="1"/>
-
-        <TextView
-            style="@style/RecyclerViewText"
-            android:text="Latitude: "
-            android:layout_column="0"
-            android:layout_row="2"/>
-
-        <TextView
-            android:id="@+id/tvLatitude"
-            style="@style/RecyclerViewText"
-            android:layout_column="1"
-            android:layout_row="2"/>
-
-        <TextView
-            style="@style/RecyclerViewText"
-            android:text="Longitude: "
-            android:layout_column="0"
-            android:layout_row="3"/>
-
-        <TextView
-            android:id="@+id/tvLongitude"
-            style="@style/RecyclerViewText"
-            android:layout_column="1"
-            android:layout_row="3"/>
-
-        <TextView
-            style="@style/RecyclerViewText"
-            android:text="Last Update: "
-            android:layout_column="0"
-            android:layout_row="4"/>
-
-        <TextView
-            android:id="@+id/tvLastUpdate"
-            style="@style/RecyclerViewText"
-            android:layout_column="1"
-            android:layout_row="4"/>
-
-        <TextView
-            style="@style/RecyclerViewText"
-            android:text="Location: "
-            android:layout_column="0"
-            android:layout_row="5"/>
 
         <TextView
             android:id="@+id/tvLocation"
             style="@style/RecyclerViewText"
-            android:layout_column="1"
-            android:layout_row="5"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/distance_to_view_normal"
+            tools:text="São Paulo, São Paulo - Brazil" />
 
-    </GridLayout>
+        <TextView
+            android:id="@+id/tvSunriseTitle"
+            style="@style/RecyclerViewText"
+            android:layout_below="@+id/tvLocation"
+            android:layout_marginTop="@dimen/distance_to_view_normal"
+            android:text="Sunrise" />
+
+        <TextView
+            android:id="@+id/tvSunrise"
+            style="@style/RecyclerViewText"
+            android:layout_below="@+id/tvSunriseTitle"
+            tools:text="10:00:00 AM" />
+
+        <ImageView
+            android:id="@+id/ivSunrise"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tvSunrise"
+            android:src="@drawable/sunrise"/>
+
+        <TextView
+            android:id="@+id/tvSunsetTitle"
+            style="@style/RecyclerViewText"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tvLocation"
+            android:layout_marginTop="@dimen/distance_to_view_normal"
+            android:text="Sunset" />
+
+        <TextView
+            android:id="@+id/tvSunset"
+            style="@style/RecyclerViewText"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tvSunsetTitle"
+            tools:text="10:00:00 AM" />
+
+        <ImageView
+            android:id="@+id/ivSunset"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tvSunset"
+            android:src="@drawable/sunset"/>
+
+        <TextView
+            android:id="@+id/tvLastUpdateTitle"
+            style="@style/RecyclerViewText"
+            android:layout_below="@+id/ivSunrise"
+            android:layout_marginTop="@dimen/distance_to_view_normal"
+            android:text="Last Update: " />
+
+        <TextView
+            android:id="@+id/tvLastUpdate"
+            style="@style/RecyclerViewText"
+            android:layout_alignTop="@+id/tvLastUpdateTitle"
+            android:layout_toEndOf="@+id/tvLastUpdateTitle"
+            tools:text="10:00:00 AM" />
+
+    </RelativeLayout>
 
 </FrameLayout>

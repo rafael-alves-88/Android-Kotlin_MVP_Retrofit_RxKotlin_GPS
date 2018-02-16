@@ -86,7 +86,7 @@ abstract class BaseLocationActivity : BaseActivity(),
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        if (hasGPSPermission()) {
+        if (hasGPSPermission() && mGoogleApiClient.isConnected) {
             LocationServices.FusedLocationApi.requestLocationUpdates(
                     mGoogleApiClient, mLocationRequest, this)
         }

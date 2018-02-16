@@ -66,8 +66,6 @@ class CityListAdapter(private var mContext: Context,
         fun bind(cityListItem: CityListItem, listener: OnCityClickListener) {
             itemView.tvSunrise.text = cityListItem.sunrise
             itemView.tvSunset.text = cityListItem.sunset
-            itemView.tvLatitude.text = cityListItem.latitude
-            itemView.tvLongitude.text = cityListItem.longitude
             itemView.tvLastUpdate.text = cityListItem.updateTime
             itemView.tvLocation.text = cityListItem.location
             itemView.setOnClickListener { listener.onCityClick(cityListItem) }
