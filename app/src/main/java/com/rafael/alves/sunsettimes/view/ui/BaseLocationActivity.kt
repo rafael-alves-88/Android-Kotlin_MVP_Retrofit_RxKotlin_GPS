@@ -13,10 +13,8 @@ import com.google.android.gms.location.LocationServices
 import com.rafael.alves.sunsettimes.utils.PlayServicesUtils
 import java.text.DateFormat
 import java.util.*
-import android.location.Geocoder
-import java.io.IOException
 import com.rafael.alves.sunsettimes.model.AddressCode
-
+import com.rafael.alves.sunsettimes.presenter.LocationPresenter
 
 abstract class BaseLocationActivity : BaseActivity(),
         LocationListener,
@@ -28,6 +26,7 @@ abstract class BaseLocationActivity : BaseActivity(),
 
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var mGoogleApiClient: GoogleApiClient
+    private val mLocationPresenter = LocationPresenter()
 
     abstract fun getCurrentLocationSunsetTimes(location: Location?, updateTime: String)
 
@@ -39,7 +38,6 @@ abstract class BaseLocationActivity : BaseActivity(),
 
     override fun onStop() {
         super.onStop()
-
         if (mGoogleApiClient.isConnected) {
             mGoogleApiClient.disconnect()
         }
@@ -109,46 +107,11 @@ abstract class BaseLocationActivity : BaseActivity(),
     }
 
     fun getAddress(location: Location?) : AddressCode? {
-        val addressCode = AddressCode()
-
-        if (Geocoder.isPresent()) {
-            try {
-                val geoCoder = Geocoder(this, Locale.getDefault())
-                val addresses = geoCoder.getFromLocation(location?.latitude!!, location.longitude, 1)
-                if (addresses != null && addresses.size > 0) {
-
-                    //val address = addresses[0].getAddressLine(0)
-                    val city = addresses[0].locality
-                    val state = addresses[0].adminArea
-                    val country = addresses[0].countryName
-                    val countryCode = addresses[0].countryCode.toLowerCase()
-
-                    addressCode.address = String.format("%s, %s - %s", city, state, country)
-                    addressCode.countryCode = countryCode
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-
-        return addressCode
+        return mLocationPresenter.getAddress(this, location)
     }
 
     fun getLocationByCityName(city: String): List<Address>? {
-        var locationList: List<Address>? = null
-        if (Geocoder.isPresent()) {
-            try {
-                val gc = Geocoder(this)
-                val addresses = gc.getFromLocationName(city, 5) // get the found Address Objects
-
-                locationList = ArrayList(addresses.size) // A list to save the coordinates if they are available
-                addresses.filterTo(locationList) { it.hasLatitude() && it.hasLongitude() }
-            } catch (e: IOException) {
-                // handle the exception
-            }
-        }
-
-        return locationList
+        return mLocationPresenter.getLocationByCityName(this, city)
     }
     //endregion
 }
